@@ -1,0 +1,5 @@
+package pizzkanban
+
+class KanbanTagLib {
+
+}
