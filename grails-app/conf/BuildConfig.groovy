@@ -1,10 +1,12 @@
-grails.servlet.version = "2.5" // Change depending on target container compliance (2.5 or 3.0)
+grails.servlet.version = "3.0" // Change depending on target container compliance (2.5 or 3.0)
 grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
 grails.project.target.level = 1.6
 grails.project.source.level = 1.6
+grails.plugin.location.'atmosphere' = 'plugins/atmosphere'
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
+
 
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
@@ -34,6 +36,19 @@ grails.project.dependency.resolution = {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
 
         // runtime 'mysql:mysql-connector-java:5.1.16'
+
+        def tomcatVersion = "7.0.27"
+        build("org.apache.tomcat:tomcat-catalina-ant:$tomcatVersion") {
+            transitive = false
+        }
+        build "org.apache.tomcat.embed:tomcat-embed-core:$tomcatVersion"
+        build "org.apache.tomcat.embed:tomcat-embed-jasper:$tomcatVersion"
+        build "org.apache.tomcat.embed:tomcat-embed-logging-log4j:$tomcatVersion"
+
+        // needed for JSP compilation
+        runtime "org.eclipse.jdt.core.compiler:ecj:3.6.2"
+
+        build "org.grails:grails-plugin-tomcat:${grailsVersion}"
     }
 
     plugins {
@@ -45,12 +60,11 @@ grails.project.dependency.resolution = {
         compile ":coffeescript-resources:0.3.2"
         compile ":lesscss-resources:1.3.0"
 
-
         // Uncomment these (or add new ones) to enable additional resources capabilities
         //runtime ":zipped-resources:1.0"
         //runtime ":cached-resources:1.0"
         //runtime ":yui-minify-resources:0.1.4"
 
-        build ":tomcat:$grailsVersion"
+        //build ":tomcat:$grailsVersion"
     }
 }
