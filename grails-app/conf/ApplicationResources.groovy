@@ -2,7 +2,8 @@ modules = {
     application {
         dependsOn 'jquery, underscore, backbone, dnd'
         resource url: [dir: 'libs/bootstrap', file: 'bootstrap.less'], attrs: [rel: "stylesheet/less", type: 'css'], disposition: 'head'
-        resource url:'js/application.js'
+        
+        resource url: '/coffee/tasks.coffee'
     }
 
     'jquery-form' {

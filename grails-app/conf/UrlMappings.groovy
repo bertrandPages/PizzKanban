@@ -7,6 +7,10 @@ class UrlMappings {
 			}
 		}
 
+        "/tasks/$id?"(controller: "task") {
+            action = [GET: "list", POST: "save", DELETE: "delete", PUT: "edit"]
+        }
+
 		"/"(view:"/index")
 		"500"(view:'/error')
 	}
