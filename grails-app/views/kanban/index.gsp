@@ -15,15 +15,4 @@
   });
 </r:script>
 </body>
-=======
-<%@ page import="grails.converters.XML" contentType="text/html;charset=UTF-8" %>
-<html>
-
-<head>
-    <meta name='layout' content='main'/>
-    <title>TOTO</title></head>
-<body>
-
-</body>
->>>>>>> Stashed changes
 </html>

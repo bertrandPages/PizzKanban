@@ -58,7 +58,7 @@ grails.project.dependency.resolution = {
 
 
         compile ":coffeescript-resources:0.3.2"
-        compile ":lesscss-resources:1.0.1"
+        compile ":lesscss-resources:1.3.0"
 
         // Uncomment these (or add new ones) to enable additional resources capabilities
         //runtime ":zipped-resources:1.0"
