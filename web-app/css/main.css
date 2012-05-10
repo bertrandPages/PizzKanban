@@ -589,3 +589,18 @@ a.skip {
 	position: absolute;
 	left: -9999px;
 }
+
+.post-it {
+    width: 200px;
+    height: 200px;
+    display: block;
+    box-shadow: 0 2px 3px 0 rgba(0,0,0, .5);
+    margin: 10px;
+    -moz-transform: rotate(1deg) skew(1deg, -1deg);
+    background-color: #fffabe;
+    background-image: -moz-linear-gradient(left, #fffabe, #fff79d); // FF 3.6+
+    background-repeat: repeat-x;
+}
+.post-it:hover {
+    -moz-transform: scale(1.02);
+}
