@@ -604,3 +604,7 @@ a.skip {
 .post-it:hover {
     -moz-transform: scale(1.02);
 }
+.background {
+    width: 600px;
+    height: 600px;
+}
