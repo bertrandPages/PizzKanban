@@ -82,7 +82,7 @@ Provides integration with the Atmosphere framework, a portable AjaxPush/Comet fr
                     		'param-value'(initParam.value)
                     	}
                     }                    
-                    'load-on-startup'('0')
+                    'load-on-startup'('1')
                 }
             }
 
