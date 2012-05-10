@@ -14,15 +14,16 @@
     <div id="taskapp">
 
       <div class="title">
-        <h1>Tasks</h1>
-        <h3>in CoffeeScript</h3>
+        <h1>Kanban</h1>
       </div>
 
       <div class="content">
 
         <div id="create-task">
-          <input id="new-task" placeholder="What needs to be done?" type="text" />
-          <span class="ui-tooltip-top" style="display:none;">Press Enter to save this task</span>
+          <label>Name:</label><input id="new-task-name" placeholder="Name" type="text" required="required" />
+          <label>Description:</label><textarea id="new-task-description" placeholder="Description (optional)" ></textarea>
+          <label>Estimated time:</label><input id="new-task-estimated-time" placeholder="Estimated time" type="number" required="required" />
+          <button id="save-new-task">Save task!</button>
         </div>
 
         <div id="tasks">
@@ -38,10 +39,11 @@
     %{--Templates --}%
 
     <script type="text/template" id="item-template">
-      <div class="task {{ done ? 'done' : '' }}">
+      <div class="task {{ done ? 'done' : '' }} post-it">
         <div class="display">
           <input class="check" type="checkbox" {{ done ? 'checked="checked"' : '' }} />
-          <div class="task-content"></div>
+          <strong><div class="task-name"></div></strong>
+          <div class="task-description"></div>
           <span class="task-destroy"></span>
         </div>
         <div class="edit">

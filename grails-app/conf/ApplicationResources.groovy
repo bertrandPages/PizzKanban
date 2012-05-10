@@ -4,6 +4,7 @@ modules = {
         resource url: [dir: 'libs/bootstrap', file: 'bootstrap.less'], attrs: [rel: "stylesheet/less", type: 'css'], disposition: 'head'
         
         resource url: '/coffee/tasks.coffee'
+        resource url: '/css/main.css'
     }
 
     'jquery-form' {

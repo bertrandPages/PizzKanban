@@ -1,4 +1,4 @@
-
+# used by underscore to specify the template syntax
 _.templateSettings = {
     interpolate : /\{\{(.+?)\}\}/g,
     evaluate : /\{!(.+?)!\}/g
@@ -11,12 +11,15 @@ $ ->
     class Task extends Backbone.Model
         # Default attributes for the task.
         defaults:
-            name: ""
-            description: "empty task..."
+            name: "Name of the task"
+            description: "description of the task"
+            estimatedTime: "estimated duration of the task"
             done: false
 
-        # Ensure that each task created has `description`.
+        # Ensure that each task created has name & description
         initialize: ->
+            if !@get("name")
+                @set({ "name": @defaults.name })
             if !@get("description")
                 @set({ "description": @defaults.description })
 
@@ -24,22 +27,18 @@ $ ->
         toggle: ->
             @save({ done: !@get("done") })
 
-        # Remove this Task from *localStorage* and delete its view.
+        # Remove this Task from the server and delete its view.
         clear: ->
             @destroy()
             @view.remove()
 
     ### Task Collection ###
 
-    # The collection of tasks is backed by *localStorage* instead of a remote
-    # server.
     class TaskList extends Backbone.Collection
 
         # Reference to this collection's model.
         model: Task
 
-        # Save all of the task items under the `"tasks"` namespace.
-#        localStorage: new Store("tasks")
         # TODO find a better way to set the URL
         url: '/PizzKanban/tasks',
 
@@ -62,7 +61,7 @@ $ ->
             return @without.apply( this, @done() )
 
         # We keep the Tasks in sequential order, despite being saved by unordered
-        # GUID in the database. This generates the next order number for new items.
+        # ID in the database. This generates the next order number for new items.
         nextOrder: ->
             return 1 if !@length
             return @last().get('order') + 1
@@ -151,15 +150,17 @@ $ ->
 
         # Delegated events for creating new items, and clearing completed ones.
         events:
-            "keypress #new-task"  : "createOnEnter",
-            "keyup #new-task"     : "showTooltip",
-            "click .task-clear a" : "clearCompleted"
+#            "keyup #new-task"     : "showTooltip",
+            "click .task-clear a" : "clearCompleted",
+            "click #save-new-task"   : "createOnSave"
 
         # At initialization we bind to the relevant events on the `Tasks`
         # collection, when items are added or changed. Kick things off by
         # loading any preexisting tasks that might be saved in *localStorage*.
         initialize: =>
-            @input = this.$("#new-task")
+            @nameInput = this.$("#new-task-name")
+            @descriptionInput = this.$("#new-task-description")
+            @estimatedTimeInput = this.$("#new-task-estimated-time")
 
             Tasks.bind("add", @addOne)
             Tasks.bind("reset", @addAll)
@@ -189,17 +190,18 @@ $ ->
         # Generate the attributes for a new Task item.
         newAttributes: ->
             return {
-                description: @input.val(),
+                name: @nameInput.val(),
+                description: @descriptionInput.val(),
+                estimatedTime: @estimatedTimeInput.val(),
                 order:   Tasks.nextOrder(),
                 done:    false
             }
 
-        # If you hit return in the main input field, create new **Task** model,
-        # persisting it to *localStorage*.
-        createOnEnter: (e) ->
-            return if (e.keyCode != 13)
+        createOnSave: (e) ->
             Tasks.create( @newAttributes() )
-            @input.val('')
+            @nameInput.val('')
+            @descriptionInput.val('')
+            @estimatedTimeInput.val('')
 
         # Clear all done task items, destroying their models.
         clearCompleted: ->
@@ -208,18 +210,19 @@ $ ->
             )
             return false
 
-        # Lazily show the tooltip that tells you to press `enter` to save
-        # a new task item, after one second.
-        showTooltip: (e) ->
-            tooltip = this.$(".ui-tooltip-top")
-            val = @input.val()
-            tooltip.fadeOut()
-            clearTimeout(@tooltipTimeout) if (@tooltipTimeout)
-            return if (val is '' || val is @input.attr("placeholder"))
-            
-            show = () ->
-                tooltip.show().fadeIn()
-            @tooltipTimeout = _.delay(show, 1000)
+#        # Lazily show the tooltip that tells you to press `enter` to save
+#        # a new task item, after one second.
+#        showTooltip: (e) ->
+#            tooltip = this.$(".ui-tooltip-top")
+#            name = @nameInput.val()
+#            description = @descriptionInput.val()
+#            tooltip.fadeOut()
+#            clearTimeout(@tooltipTimeout) if (@tooltipTimeout)
+#            return if (name is '' || name is @nameInput.attr("placeholder"))
+#
+#            show = () ->
+#                tooltip.show().fadeIn()
+#            @tooltipTimeout = _.delay(show, 1000)
 
     # Create our global collection of **Tasks**.
     # Note: I've actually chosen not to export globally to `window`.
