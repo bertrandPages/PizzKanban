@@ -2,7 +2,7 @@ atmospherePlugin {
     servlet {
     	// Servlet initialization parameters
     	// Example: initParams = ['org.atmosphere.useNative': 'true', 'org.atmosphere.useStream': 'false']
-    	initParams = ['org.atmosphere.useNative': 'true']
+    	initParams = ['org.atmosphere.websocket.WebSocketProtocol':'pizzkanban.PizzaSocketHandler']
     	urlPattern = '/atmosphere/*'
     }
     handlers {

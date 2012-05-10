@@ -73,23 +73,23 @@ Provides integration with the Atmosphere framework, a portable AjaxPush/Comet fr
             def servlets = xml.'servlet'
             servlets[servlets.size()-1] + {
                 'servlet' {
-                    'description'('StratosphereServlet')
-                    'servlet-name'('StratosphereServlet')
-                    'servlet-class'('com.odelia.grails.plugins.atmosphere.StratosphereServlet')
+                    'description'('AtmosphereServlet')
+                    'servlet-name'('AtmosphereServlet')
+                    'servlet-class'('org.atmosphere.cpr.AtmosphereServlet')
                     config?.atmospherePlugin?.servlet?.initParams.each { initParam ->
                     	'init-param' {
                     		'param-name'(initParam.key)
                     		'param-value'(initParam.value)
                     	}
                     }                    
-                    'load-on-startup'('1')
+                    'load-on-startup'('0')
                 }
             }
 
             def mappings = xml.'servlet-mapping'
             mappings[mappings.size()-1] + {
                 'servlet-mapping' {
-                    'servlet-name'('StratosphereServlet')
+                    'servlet-name'('AtmosphereServlet')
                     def urlPattern = config?.atmospherePlugin?.servlet?.urlPattern ?: '/atmosphere/*'
                     'url-pattern'(urlPattern)
                 }
@@ -100,13 +100,13 @@ Provides integration with the Atmosphere framework, a portable AjaxPush/Comet fr
     def doWithDynamicMethods = { ctx ->
         // TODO Implement registering dynamic methods to classes (optional) 
 
-	   	ctx.servletContext.setAttribute(StratosphereServlet.ATMOSPHERE_PLUGIN_SERVICE_HANDLERS, ctrlHanlers)		    
+	   	//ctx.servletContext.setAttribute(StratosphereServlet.ATMOSPHERE_PLUGIN_SERVICE_HANDLERS, ctrlHanlers)
         
-    	application.controllerClasses.each { addMethod(it) }	
-    	application.serviceClasses.each { service ->
-			if (getAtmospherePropertyValue(service))
+    	//application.controllerClasses.each { addMethod(it) }
+    	//application.serviceClasses.each { service ->
+		/*	if (getAtmospherePropertyValue(service))
 				addMethod(service)
-		}
+		}*/
     }
 
     def onChange = { event ->
@@ -122,13 +122,13 @@ Provides integration with the Atmosphere framework, a portable AjaxPush/Comet fr
     
 	private addMethod(source) {
 		log.debug "Adding dynamic method to ${source}"
-		source.metaClass.getBroadcaster = {->
+		/*source.metaClass.getBroadcaster = {->
 			def _broadcaster = [:]
 			servletContext[StratosphereServlet.ATMOSPHERE_PLUGIN_HANDLERS_CONFIG].each {
 				_broadcaster."${it.key}" = it.value.broadcaster
 			}
 			_broadcaster
-		}
+		}*/
 	}
    
 }
