@@ -15,7 +15,6 @@
 </head>
 <body>
     <g:layoutBody/>
-    TOTO
     <r:layoutResources />
 </body>
 </html>

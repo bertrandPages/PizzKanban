@@ -1,28 +1,33 @@
 #rotationSkew(@deg: 1deg, @skew: 1deg) {
-    transform: rotate(@deg) skew(@skew, -@skew);
+    transform: rotate(@deg) skew(@skew, @skew);
     -moz-transform: rotate(@deg);
     -webkit-transform: rotate(@deg);
 }
-#scale(@ratio:1.02)  {
+#scale(@ratio: 1.02)  {
     -moz-transform: scale(@ratio);
     transform:scale(@ratio);
     -webkit-transform:scale(@ratio);
 
 }
+#unselectable {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
 .post-it {
-    #gradient .horizontal(#fffabe, #fff79d);
-    #rotationSkew()
+    #gradient.horizontal(#fffabe, #fff79d);
+    #rotationSkew;
     .box-shadow();
     width: 200px;
     height: 200px;
     margin: 10px;
+    cursor:move;
+    #unselectable;
     &:hover{
-        #scale()
+        #scale;
     }
-}
-
-
-.background {
-    width: 600px;
-    height: 600px;
+    .dragged {
+        opacity: 0.5;
+    }
 }
