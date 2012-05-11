@@ -1,10 +1,13 @@
 modules = {
     application {
-        dependsOn 'jquery, underscore, backbone, dnd'
+        dependsOn 'jquery, underscore, backbone'
         resource url: [dir: 'libs/bootstrap', file: 'bootstrap.less'], attrs: [rel: "stylesheet/less", type: 'css'], disposition: 'head'
-        
+        //resource url: '/css/main.css'
+    }
+
+    tasks {
+        dependsOn 'application'
         resource url: '/coffee/tasks.coffee'
-        resource url: '/css/main.css'
     }
 
     'jquery-form' {
@@ -16,8 +19,5 @@ modules = {
     }
     underscore {
         resource url: '/js/underscore-1.1.6.js'
-    }
-    dnd {
-        resource url: '/js/jquery.dnd.js'
     }
 }

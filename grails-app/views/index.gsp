@@ -3,7 +3,7 @@
 
   <head>
     <title>Our Über Kanban !!!</title>
-    <r:require module="application" />
+    <r:require modules="application, tasks" />
     <meta name="layout" content="main">
   </head>
 
